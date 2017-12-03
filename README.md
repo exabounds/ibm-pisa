@@ -78,7 +78,7 @@ $ make
 # Configure and compile the analysis pass and the library
 $ cd $LLVM_ROOT
 $ git clone PATH_TO_PISA_GIT
-$ cd analysis
+$ cd ibm-pisa
 $ ANALYSIS_ROOT_DIR=$(pwd)
 # Copy my_env.sh and set the local paths.
 # (Re)Edit the my_env.sh file to change the paths accordingly.
@@ -151,10 +151,10 @@ $ make coupled
         
 # In the 'my_env.sh' file, set COUPLED_PASS_PATH, PISA_LIB_PATH, PISA_EXAMPLES and PRETTYPRINT.
 # export COUPLED_PASS_PATH=$PISA_ROOT/analysis-install/lib
-# export PISA_LIB_PATH=$PISA_ROOT/analysis/library
+# export PISA_LIB_PATH=$PISA_ROOT/ibm-pisa/library
 # export LD_LIBRARY_PATH=$PISA_LIB_PATH:$LD_LIBRARY_PATH
-# export PISA_EXAMPLES=$PISA_ROOT/analysis/example-compile-profile
-# export PRETTYPRINT=$PISA_ROOT/analysis/example-compile-profile/prettyPrint.sh
+# export PISA_EXAMPLES=$PISA_ROOT/ibm-pisa/example-compile-profile
+# export PRETTYPRINT=$PISA_ROOT/ibm-pisa/example-compile-profile/prettyPrint.sh
 # After setting these variables, run 'source my_env.sh'.  
 ```
 
@@ -164,7 +164,7 @@ $ cd $ANALYSIS_ROOT_DIR/example-compile-profile/compile/app0
 $ make pisa (to generate the instrumented binary)
 # If -lcurses is not found, run 'sudo apt-get install libncurses5-dev'.
 $ export PISAFileName=out
-$ export export OMP_NUM_THREADS=1
+$ export OMP_NUM_THREADS=1
 $ ./main.pisaCoupled.nls
 $ vi out (to check the characterization results)
 ```
