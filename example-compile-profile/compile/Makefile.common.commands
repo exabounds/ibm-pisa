@@ -1,0 +1,81 @@
+CFLAGS+= $(APPADDCOMPILEFLAGS)
+LDFLAGS+= $(APPADDLDFLAGS)
+
+ifeq ($(LANGUAGE),FORTRAN)
+	LDFLAGS+= -lgfortran
+endif
+
+
+.PHONY: run-exe-clang clean
+.PRECIOUS: $(SOURCES_F:.f=.bc0)
+
+all: pisa 
+# decoupled
+
+pisa: main.pisaCoupled.nls
+
+## pisaDecoupled is the client.
+# decoupled: main.pisaDecoupled.nls 
+
+%.bc: %.bc0
+	$(OPT) $(OPT_LEVEL) -disable-loop-vectorization -disable-slp-vectorization $< -o $@
+
+%.bc: %.c
+	$(CC) $(CFLAGS) $< -o $@
+
+%.bc: %.cc
+	$(CCPP) $(CFLAGS) $< -o $@
+
+%.bc: %.cpp
+	$(CCPP) $(CFLAGS) $< -o $@
+	
+%.bc0: %.f
+	$(CFORTRAN) $(DRAGONEGG_FLAGS) $< -o $@
+	
+main.bc: $(SOURCES_BC)
+	$(LD) $(SOURCES_BC) -o main.bc
+	
+main.noInstrumentation.bc: main.bc
+	$(OPT) -mem2reg main.bc -o main.noInstrumentation.bc
+
+main.ilp.bc: main.mem2reg.bc
+	$(OPT) $(OPT_COUPLED_ANALYSIS_FLAGS) -analyze-ilp -window-size=54 $< -o $@
+	
+main.dtr.bc: main.noInstrumentation.bc
+	$(OPT) $(OPT_COUPLED_ANALYSIS_FLAGS) -analyze-data-temporal-reuse -data-cache-line-size=128 $< -o $@
+	
+main.itr.bc: main.noInstrumentation.bc
+	$(OPT) $(OPT_COUPLED_ANALYSIS_FLAGS) -analyze-inst-temporal-reuse -inst-cache-line-size=16 -inst-size=1 $< -o $@
+	
+main.rca.bc: main.noInstrumentation.bc
+	$(OPT) $(OPT_COUPLED_ANALYSIS_FLAGS) -register-counting $< -o $@
+	
+main.mix.bc: main.noInstrumentation.bc
+	$(OPT) $(OPT_COUPLED_ANALYSIS_FLAGS) $< -o $@
+	
+main.pisaCoupled.bc: main.noInstrumentation.bc
+	$(OPT) $(OPT_COUPLED_ANALYSIS_FLAGS) $(PISA_COUPLED_ANALYSIS_FLAGS) $< -o $@
+
+# main.pisaDecoupled.bc: main.noInstrumentation.bc
+# 	$(OPT) $(OPT_DECOUPLED_ANALYSIS_FLAGS) $(PISA_DECOUPLED_ANALYSIS_FLAGS) $< -o $@
+
+exe-clang: main.noInstrumentation.bc
+#ifneq ($(LANGUAGE),C)
+	$(CCPP) $(OPT_LEVEL) $(LD_NO_OPT) $(LDFLAGS) main.noInstrumentation.bc -o exe-clang
+#else
+#	$(CC) $(OPT_LEVEL) $(LD_NO_OPT) $(LDFLAGS) main.noInstrumentation.bc -o exe-clang
+#endif
+
+# main.pisaDecoupled.nls: main.pisaDecoupled.bc
+# 	$(CCPP) $(LDFLAGS) $(LD_DECOUPLED_NLS_FLAGS) $< -o $@
+
+main.pisaCoupled.nls: main.pisaCoupled.bc
+	$(CCPP) $(LDFLAGS) $(LD_COUPLED_NLS_FLAGS) $< -o $@
+
+install: 
+	install main.*.nls main.noInstrumentation.bc $(INSTALL_FOLDER)
+
+clean:
+	rm -f ./*.bc *.bc0 ./*.nls exe-clang
+
+

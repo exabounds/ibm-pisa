@@ -1,0 +1,1 @@
+These results were obtained using the -O3 -fno-slp-vectorize -fno-vectorize compiler optimizations (clang 3.5.2).

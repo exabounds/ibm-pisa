@@ -1,0 +1,26 @@
+Use the regression test in this directory before committing major modifications.
+
+First install our software and check that the following folders can be found:
+    $PISA_ROOT/analysis/example-compile-run/compile/app0
+    $PISA_ROOT/analysis/example-compile-run/profile/app0
+    $PISA_ROOT/analysis/example-compile-run/references .
+
+From this directory, run '$> ./regressionTestApp0.sh'.
+
+It recompiles the application in example-compile-run/compile/app0 for the coupled and decoupled implementations.
+Then it profiles the application execution and compares the current output with the reference one using diff.
+If the diff output is not empty, it is printed together with warning messages. Check these warnings. 
+They might be fine though, e.g. the instruction count might vary with the LLVM version. But all fields must be there.
+If everything is fine you should get a similar output at the end of the test (note that in this example noise is perturbating the coupled analysis):
+
+POSSIBLE PROBLEMS IN CNLS ANALYSIS:
+1233c1233 < 194 --- > 192 1245c1245 < 1 --- > 2 1253c1253 < 0.9651 --- > 0.9552 1257c1257 < 0.9701 --- > 0.9601 1261c1261 < 0.9751 --- > 0.9651 1265c1265 < 0.98 --- > 0.9751
+PLEASE DOUBLE CHECK /home/mariani/workspace/compilers/llvm-3.5/example-compile-profile/profile/app0/differences.cnls
+Or use a GUI to compare: /home/mariani/workspace/compilers/llvm-3.5/example-compile-profile/profile/app0/output.cnls /home/mariani/workspace/compilers/llvm-3.5/example-compile-profile/references/app0.cnls
+
+NOTE:
+The script regressionTestApp0.sh does not recompile the libraries (or the pass) of our software. 
+Before running the test you need to have installed the version of our software (coupled or decoupled) you want to test.
+
+If you extended our software such to have additional fields in the JSON output, you will get warning messages. 
+If you are sure your output is correct, run '$> generateReferences.sh'.

@@ -1,0 +1,42 @@
+## LLVM installation
+BASE_LLVM=$(LLVM_INSTALL)
+
+CC=$(BASE_LLVM)/bin/clang
+LD=$(BASE_LLVM)/bin/llvm-link
+OPT=$(BASE_LLVM)/bin/opt
+LLC=$(BASE_LLVM)/bin/llc
+CCPP=$(BASE_LLVM)/bin/clang++
+CFORTRAN?=gcc-4.8
+DRAGONEGG=$(DRAGONEGG_PATH)/dragonegg.so
+
+## This is to let the software profile be as close as possible to the actual execution profile. 
+## Only used for the non-instrumented version of the executable.
+LD_NO_OPT=-fno-slp-vectorize -fno-vectorize
+OPT_LEVEL=-O3
+
+INCLUDE_FLAGS=-I$(MPI_DIR)/include
+
+CFLAGS=-c -emit-llvm $(OPT_LEVEL) $(LD_NO_OPT) $(INCLUDE_FLAGS)
+LDFLAGS=-L$(MPI_DIR)/lib -L$(MPI_DIR)/lib/openmpi
+
+## gcc flags to generate LLVM IR from fortran code
+DRAGONEGG_FLAGS=-cpp -O0 -S -fplugin=$(DRAGONEGG) -ffixed-line-length-132 -fplugin-arg-dragonegg-emit-ir $(INCLUDE_FLAGS) 
+
+## Software coupled instrumentation
+OPT_COUPLED_ANALYSIS_FLAGS=-load $(COUPLED_PASS_PATH)/Analysis.so -mem2reg -instnamer -analysis -app-name=$(APPNAME) -test-name=$(COMPILATION_SCENARIO)
+PISA_COUPLED_ANALYSIS_FLAGS=-max-expected-threads=16 -analyze-ilp -window-size=54 -analyze-data-temporal-reuse -analyze-memory-footprint -data-cache-line-size=128 -analyze-inst-temporal-reuse -inst-cache-line-size=16 -inst-size=1 -register-counting -mpi-stats -mpi-data -openmp-stats -external-library-call-count
+
+## Software decoupled instrumentation
+# PISAPORT=1100
+# PISASERVER=$(LIB_PATH)/server
+
+# OPT_DECOUPLED_ANALYSIS_FLAGS=-load $(DECOUPLED_PASS_PATH)/Analysis.so -analysis -server='127.0.0.1:$(PISAPORT)'  
+# PISA_DECOUPLED_ANALYSIS_SERVER_FLAGS=-max-expected-threads=16 -analyze-ilp -window-size=54 -analyze-data-temporal-reuse -analyze-memory-footprint -data-cache-line-size=128 -analyze-inst-temporal-reuse -inst-cache-line-size=16 -inst-size=1 -register-counting -mpi-stats -mpi-data -external-library-call-count
+
+## This line defines all instrumentations to be used when generating exe.pisa.nls
+LD_COUPLED_NLS_FLAGS=-lanalysisCoupled -lmpi -lmpi_cxx  -liomp5 $(shell llvm-config --libs) -lcurses -lz -lpthread -ltinfo -lrt -ldl -lm -L$(PISA_LIB_PATH)
+#LD_DECOUPLED_NLS_FLAGS=-lanalysisDecoupled -lmpi -lmpi_cxx  -liomp5 $(shell llvm-config --libs) -lcurses -lz -lpthread -ltinfo -lrt -ldl -lm -L$(PISA_LIB_PATH)
+
+## Note that the commands for single-property instrumentations are also available in Makefile.common.commands, e.g. 
+## > make exe.ilp.nls
+## will generate an executable for ilp-only instrumentation.

@@ -1,0 +1,27 @@
+*****************************
+* How to add a new analysis *
+*****************************
+
+libanalysisCoupled.cc (for the coupled version of the software) is the main 
+file of the library. This file includes all the exposed library calls.
+
+The analysis are abstracted in the WKLDchar class. This class contains a
+member of each type of analysis (InstructionMix, DataTempReuse, InstTempReuse,
+RegisterCount, LoadStoreVerbose, MPIstats, ILP, etc.). Adding a new analysis
+will imply to also add a member of that type in the header file of the 
+WKLDchar class.
+
+The new member must be initialized in the WKLDchar constructor class.
+
+'analyze' function (from WKLDchar) calls all the 'visit' functions, from each 
+active analysis.
+
+'dump' function (from WKLDchar) calls all the 'dump' functions, from each 
+active analysis.
+
+Typically all the analysis extend the InstructionAnalysis class, but this is
+not mandatory. The extended class includes the corresponding thread_id and
+processor_id and an API to get the instruction type and memory access size
+(if any).
+
+If a new analysis is added, modify the Makefile to also compile the new class file.
