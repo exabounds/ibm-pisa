@@ -33,12 +33,12 @@ export COUPLED_PASS_PATH=$PISA_ROOT/analysis-install/lib
 # export DECOUPLED_PASS_PATH=$PISA_ROOT/PISApass-decoupled-install/lib
 
 # Set LIB_PATH
-export PISA_LIB_PATH=$PISA_ROOT/analysis/library
+export PISA_LIB_PATH=$PISA_ROOT/ibm-pisa/library
 
 export LD_LIBRARY_PATH=$PISA_LIB_PATH:$LD_LIBRARY_PATH
 
 ## This variable is used for automatic generation and verification of tests outputs
-export PISA_EXAMPLES=$PISA_ROOT/analysis/example-compile-profile
+export PISA_EXAMPLES=$PISA_ROOT/ibm-pisa/example-compile-profile
 
 ## Analyze FORTRAN code with Dragonegg + LLVM-3.5.2
 # export GCC=gcc-4.8
@@ -54,4 +54,4 @@ export PISA_EXAMPLES=$PISA_ROOT/analysis/example-compile-profile
 # export AddJSONData=header.json
 
 ## Print PISA output in JSON pretty print
-export PRETTYPRINT=$PISA_ROOT/analysis/example-compile-profile/prettyPrint.sh
+export PRETTYPRINT=$PISA_ROOT/ibm-pisa/example-compile-profile/prettyPrint.sh
