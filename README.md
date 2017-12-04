@@ -7,6 +7,9 @@ IBM Platform-Independent Software Analysis is a framework based on the LLVM comp
 
 IBM Platform-Independent Software Analysis characterizes applications per thread and process and measures software properties such as: instruction-level parallelism, flow-control behavior, memory access pattern, and inter-process communication behavior. 
 
+A detailed description of the IBM Platform-Independent Software Analysis tool is provided here: https://doi.org/10.1007/s10766-016-0410-0.
+More related publications are listed on the project website: http://researcher.watson.ibm.com/researcher/view_group_pubs.php?grp=6395.
+
 ## Getting Started
 
 Four LLVM versions are currently supported: 3.4 , 3.5.2 , 3.7 and 3.8. IBM Platform-Independent Software Analysis has been mostly tested with LLVM 3.4. The user might encounter issues with the other versions when for instance instrumenting source code compiled with the '-g' flag. LLVM 3.5.2 supports also FORTRAN code by using DRAGONEGG which has been tested with gcc-4.7.4. If the user needs to analyze FORTRAN code, use LLVM 3.5.2 with DRAGONEGG. LLVM 3.7 supports PowerPC backend.
