@@ -7,14 +7,32 @@ IBM Platform-Independent Software Analysis is a framework based on the LLVM comp
 
 IBM Platform-Independent Software Analysis characterizes applications per thread and process and measures software properties such as: instruction-level parallelism, flow-control behavior, memory access pattern, and inter-process communication behavior. 
 
-A detailed description of the IBM Platform-Independent Software Analysis tool is provided here:
+A detailed description of the IBM Platform-Independent Software Analysis tool can be found in the following paper:
+[IBM-PISA IJPP Paper](https://doi.org/10.1007/s10766-016-0410-0).
 ```
-https://doi.org/10.1007/s10766-016-0410-0
+@article{DBLP:journals/ijpp/AnghelVMJD16,
+  author    = {Andreea Anghel and
+               Laura Mihaela Vasilescu and
+               Giovanni Mariani and
+               Rik Jongerius and
+               Gero Dittmann},
+  title     = {An Instrumentation Approach for Hardware-Agnostic Software Characterization},
+  journal   = {International Journal of Parallel Programming},
+  volume    = {44},
+  number    = {5},
+  pages     = {924--948},
+  year      = {2016},
+  url       = {https://doi.org/10.1007/s10766-016-0410-0},
+  doi       = {10.1007/s10766-016-0410-0},
+  timestamp = {Wed, 26 Jul 2017 16:39:50 +0200},
+  biburl    = {http://dblp.org/rec/bib/journals/ijpp/AnghelVMJD16},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
 ```
+
 More related publications are listed on the project website:
-```
-http://researcher.watson.ibm.com/researcher/view_group_pubs.php?grp=6395
-```
+[IBM-PISA-related projects](http://researcher.watson.ibm.com/researcher/view_group_pubs.php?grp=6395).
+
 
 ## Getting Started
 
