@@ -1,6 +1,6 @@
 # IBM Platform-Independent Software Analysis
 
-IBM Platform-Independent Software Analysis is a framework based on the LLVM compiler infrastructure that analyzes C/C++ and Fortran code at instruction, basic block and function level at application run-time. Its objective is to generate a software model for sequential and parallel (OpenMP and MPI) applications in a hardware-independent manner. Two examples of use cases for this framework are: 
+IBM Platform-Independent Software Analysis is a framework based on the [LLVM compiler infrastructure](http://llvm.org/) that analyzes C/C++ and Fortran code at instruction, basic block and function level at application run-time. Its objective is to generate a software model for sequential and parallel (OpenMP and MPI) applications in a hardware-independent manner. Two examples of use cases for this framework are: 
 
   - Hardware-agnostic software characterization to support design decision to match hardware designs to applications.
   - Hardware design-space exploration studies by combining the software model with hardware performance models.
@@ -16,7 +16,7 @@ More related publications are listed here:
 
 ## Getting Started
 
-Four LLVM versions are currently supported: 3.4 , 3.5.2 , 3.7 and 3.8. IBM Platform-Independent Software Analysis has been mostly tested with LLVM 3.4. The user might encounter issues with the other versions when for instance instrumenting source code compiled with the '-g' flag. LLVM 3.5.2 supports also FORTRAN code by using DRAGONEGG which has been tested with gcc-4.7.4. If the user needs to analyze FORTRAN code, use LLVM 3.5.2 with DRAGONEGG. LLVM 3.7 supports PowerPC backend.
+Four [LLVM versions](http://releases.llvm.org/) are currently supported: 3.4 , 3.5.2 , 3.7 and 3.8. IBM Platform-Independent Software Analysis has been mostly tested with LLVM 3.4. The user might encounter issues with the other versions when for instance instrumenting source code compiled with the '-g' flag. LLVM 3.5.2 supports also FORTRAN code by using DRAGONEGG which has been tested with gcc-4.7.4. If the user needs to analyze FORTRAN code, use LLVM 3.5.2 with DRAGONEGG. LLVM 3.7 supports PowerPC backend.
 
 The next section describes how to install the IBM Platform-Independent Software Analysis tool with LLVM 3.4 for Ubuntu OS. Note that the LLVM version is automatically identified at compilation time. Make sure that $LLVM_INSTALL/bin/clang is set to the right LLVM version.
 
