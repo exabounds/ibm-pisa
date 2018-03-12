@@ -1,6 +1,6 @@
 # README Branch Behavior Analysis
 
-The IBM Platform-Independent Software Analysis tool provides an analysis that quantifies the predictability of the branch behavior of a program. To run such an analysis, the user should first generate a trace of branches and their outcomes. To generate such a trace, the user should instrument the application code using the following two analysis flags:```-branch-entropy -branch-entropy-file="filename"```. The IBM Platform-Independent Software Analysis tool will thus generate at runtime a trace with the name```filename```. An example of the trace format is shown below:
+The IBM Platform-Independent Software Analysis tool provides an analysis that quantifies the predictability of the branch behavior of a program. To run this analysis, the user should first generate a trace of branches and their outcomes. To generate such a trace, the user should instrument the application code using the following two analysis flags:```-branch-entropy -branch-entropy-file="filename"```. The IBM Platform-Independent Software Analysis tool will thus create a trace with the name```filename```. An trace example is shown below:
 
 ```
     | Branch type | Function_ID | BasicBlock_ID | Instruction_ID | T/F | Thread_ID | Processor_ID|
@@ -11,7 +11,7 @@ The IBM Platform-Independent Software Analysis tool provides an analysis that qu
 
 For example, the first branch in the example above is characterized as follows. It is an unconditional branch (ub), the branch instruction is in function 0 (as found in the instrumented bitcode), in basic block 0 of function 0 (also as found in the instrumented bitcode), it is the 5th instruction in the basic block, the branch outcome is true (1) and the branch instruction was executed by thread number 0 of process number 0. Single-threaded, single-process programs will always have "0 0" in the last two columns of the trace for all branches. 
 
-Then the trace will be input to a separate program```branchBehavior.cc``` that quantifies the predictability of the branch behavior of a program. This separate program calculates the [branch entropy](https://link.springer.com/chapter/10.1007/978-3-540-78153-0_21) and the maximum branch outcome method proposed in chapter 4.4.4 [here](https://doi.org/10.3929/ethz-b-000212482). While the first metric only takes into account the size of the global or local history size, the latter metric can also take into account the limited size of the branch pattern table. The output will be a .csv file which includes the values of the branch behavior characterization metrics. 
+The trace will be input to```branchBehavior.cc``` that quantifies the predictability of the branch behavior of a program.```branchBehavior.cc``` calculates the [branch entropy](https://link.springer.com/chapter/10.1007/978-3-540-78153-0_21) and the max-outcome branch prediction method proposed in chapter 4.4.4 [here](https://doi.org/10.3929/ethz-b-000212482). While the first metric only takes into account the size of the global or local history size, the latter metric can also take into account the limited size of the branch pattern table. The output will be a .csv file which includes the values of the branch behavior characterization metrics. 
 
 
 - How to compile the```branchBehavior.cpp``` code? The code must be compiled as follows.
@@ -45,7 +45,7 @@ windowSize,entropy,difference,approxInverse,inverse,mispredictionRate_BASIC,misp
 
 - What is the difference between global and local? 
 
-The branch behavior metric can be computed across all the branches of a program (regardless of their function ID, basic block ID or instruction ID) or per branch. The first one is called global analysis, while the latter is called local analysis. The local one computes the metric per branch and it averages the metric values across branches. A branch is identified based on three identifiers: the function ID, the basic block ID and the instruction ID. The branch entropy analysis has been tested with global and local, while the maximum outcome metric only with global analysis.
+The branch behavior metric can be computed across all the branches of a program (regardless of their function ID, basic block ID or instruction ID) or per branch. The first one is called global analysis, while the latter is called local analysis. The local one computes the metric per branch and it averages the metric values across branches. A branch is identified based on three identifiers: the function ID, the basic block ID and the instruction ID. The branch entropy analysis has been tested with global and local, while the max-outcome metric only with global analysis.
     
 - What is the meaning of the different columns in the output .csv file? 
 
