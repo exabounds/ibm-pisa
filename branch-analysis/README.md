@@ -1,6 +1,6 @@
 # README Branch Behavior Analysis
 
-The IBM Platform-Independent Software Analysis tool provides an analysis that quantifies the predictability of the branch behavior of a program. To run this analysis, the user should first generate a trace of branches and their outcomes. To generate such a trace, the user should instrument the application code using the following two analysis flags:```-branch-entropy -branch-entropy-file="filename"```. The IBM Platform-Independent Software Analysis tool will thus create a trace with the name```filename```. An trace example is shown below:
+The IBM Platform-Independent Software Analysis tool provides an analysis that quantifies the predictability of the branch behavior of a program. To run this analysis, the user should first generate a trace of branches and their outcomes. To generate such a trace, the user should instrument the application code using the following two analysis flags:```-branch-entropy -branch-entropy-file="filename"```. The IBM Platform-Independent Software Analysis tool will thus create a trace with the name```filename```. A trace example is shown below:
 
 ```
     | Branch type | Function_ID | BasicBlock_ID | Instruction_ID | T/F | Thread_ID | Processor_ID|
