@@ -64,4 +64,6 @@ The most relevant metrics in the output are the following:
     nBranches1: number of branches with outcome 1 (true).
 ``` 
 
+- Would it be possible to provide an example of how to use the branch behavior analysis?
     
+Let's assume that our design-space exploration scenario is the following. We would like to explore global history buffer sizes from 2 to 32 and determine an estimate of the branch misprediction rate for each size. We are interested in the global branching behavior of the program. We are also interested in understanding the impact of the size of the branch pattern table. We analyze branch pattern table sizes of 8192, 16384 and 32768 entries. These sizes are currently hard coded in addition to sizes of 8, 32, 64, 256, 512, 1024, 2048 and 4096. We use as input the random trace provided [here](https://github.com/exabounds/ibm-pisa/blob/master/branch-analysis/random_10M.test.trace.gz). This trace was generated using a random generator of 0s and 1s. We run the branch behavior analysis program and the results are shown below. ![here](random_branching_characterization.png)
